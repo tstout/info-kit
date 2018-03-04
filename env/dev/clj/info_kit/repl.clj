@@ -31,3 +31,9 @@
 (defn stop-server []
   (.stop @server)
   (reset! server nil))
+
+(defn load-vars []
+  (require '[info-kit.db :as db]
+           '[info-kit.migrations :as migrations]
+           '[clojure.java.jdbc :as sql]
+           '[info-kit.conf :as conf]))
