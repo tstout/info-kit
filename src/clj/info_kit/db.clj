@@ -1,5 +1,7 @@
 (ns info-kit.db
-  (:require [clojure.tools.logging :as log])
+  (:require [clojure.tools.logging :as log]
+            [mount.core :refer [defstate]]
+            [clojure.java.jdbc :as jdbc])
   (:import (java.net InetAddress)
            (org.h2.tools Server)))
 
@@ -18,7 +20,7 @@
 (def h2-mem
   {:classname   "org.h2.Driver"
    :subprotocol "h2"
-   :subname     "mem:fin-kratzen;DB_CLOSE_DELAY=-1"
+   :subname     "mem:info-kit;DB_CLOSE_DELAY=-1"
    :user        "sa"
    :password    ""})
 
@@ -26,6 +28,17 @@
   "Start a local H2 TCP Server"
   []
   (log/info "starting h2...")
-  (let [h2Server (Server/createTcpServer (into-array String ["-tcpAllowOthers"]))]
-    (.start h2Server)))
+  (->
+    (into-array String ["-tcpAllowOthers"])
+    Server/createTcpServer
+    .start))
 
+(defstate h2-db
+          :start (start-h2)
+          :stop (.stop h2-db))
+
+(defn run-query
+  "Execute the specified sql with an assumed id query parameter."
+  [sql db-spec]
+  (jdbc/with-db-connection [conn db-spec]
+                           (jdbc/query conn [sql])))

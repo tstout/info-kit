@@ -35,7 +35,7 @@
 ;; migrations mechanics
 
 (defn run-and-record [db-conn migration]
-  (println "Running migration:" (:name (meta migration)))
+  (log/infof "Running migration: %s" (:name (meta migration)))
   (migration)
   (sql/insert! db-conn "migrations" [:name :created_at]
                      [(str (:name (meta migration)))
@@ -59,6 +59,7 @@
         (run-and-record db-conn m)))))
 
 (defn run-migration []
+  (log/info "running migrations")
   (migrate #'initial-schema))
            ;#'add-instance-id
            ;#'add-shutdown-token
