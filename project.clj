@@ -1,18 +1,21 @@
-(defproject info-kit "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+(defproject info-kit "0.1.0"
+  :description "Ad-hoc stash for various bits of information"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [ring-server "0.5.0"]
+                 [org.clojure/java.jdbc "0.7.5"]
                  [reagent "0.7.0"]
+                 [mount "0.1.12"]
                  [reagent-utils "0.2.1"]
                  [ring "1.6.3"]
                  [ring/ring-defaults "0.3.1"]
                  [compojure "1.6.0"]
                  [hiccup "1.0.5"]
                  [yogthos/config "1.1"]
+                 [com.h2database/h2 "1.4.196"]
                  [org.clojure/clojurescript "1.9.946"
                   :scope "provided"]
                  [secretary "1.2.3"]
