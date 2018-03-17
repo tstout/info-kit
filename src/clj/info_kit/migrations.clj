@@ -4,7 +4,7 @@
 (ns info-kit.migrations
   (:require [clojure.java.jdbc :as sql]
             [info-kit.db :refer [h2-local]]
-            [clojure.tools.logging :as log]
+            [taoensso.timbre :as log]
             [info-kit.conf :refer [load-res]])
   (:import (java.sql Timestamp)))
 
@@ -32,10 +32,8 @@
 (defn add-region []
   (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN region VARCHAR"))
 
-;; migrations mechanics
-
 (defn run-and-record [db-conn migration]
-  (log/infof "Running migration: %s" (:name (meta migration)))
+  ;;(log/infof "Running migration: %s" (:name (meta migration)))
   (migration)
   (sql/insert! db-conn "migrations" [:name :created_at]
                      [(str (:name (meta migration)))
@@ -59,7 +57,7 @@
         (run-and-record db-conn m)))))
 
 (defn run-migration []
-  (log/info "running migrations")
+  ;;(log/info "running migrations")
   (migrate #'initial-schema))
            ;#'add-instance-id
            ;#'add-shutdown-token

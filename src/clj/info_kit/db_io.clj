@@ -1,5 +1,5 @@
 (ns info-kit.db-io
-  (:require [clojure.tools.logging :as log]
+  (:require [taoensso.timbre :as log]
             [mount.core :refer [defstate]]
             [clojure.java.jdbc :as jdbc]))
 

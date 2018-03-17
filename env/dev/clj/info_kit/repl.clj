@@ -38,7 +38,9 @@
            '[clojure.java.jdbc :as sql]
            '[info-kit.conf :as conf]
            '[mount.core :as mount]
-           '[info-kit.db-io :as db-io]))
+           '[info-kit.db-io :as db-io]
+           '[taoensso.timbre :as log]
+           '[info-kit.logging :as log-cfg]))
 
 (load-vars)
 (println (str "Java Runtime: " (-> Runtime
