@@ -6,11 +6,12 @@
            (java.util Date)))
 
 (defn log-message [config data]
-  (let [entry
-        {:instant   (Timestamp. (.getTime ^Date (:instant data)))
-         :level     (str (:level data))
-         :namespace (str (:?ns-str data))
-         :msg       (str (force (:msg_ data)))}]
+  (let [{:keys [instant level ?ns-str msg_]} data
+        entry
+        {:instant   (Timestamp. (.getTime ^Date instant))
+         :level     (str level)
+         :namespace (str ?ns-str)
+         :msg       (str (force msg_))}]
 
     (jdbc/with-db-connection
       [conn config]
