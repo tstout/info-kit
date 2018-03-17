@@ -6,6 +6,7 @@
 
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [ring-server "0.5.0"]
+                 [com.taoensso/timbre "4.10.0"]
                  [org.clojure/java.jdbc "0.7.5"]
                  [reagent "0.7.0"]
                  [mount "0.1.12"]
