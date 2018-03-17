@@ -10,19 +10,20 @@
     (log/infof "Using host name %s for DB..." host)
     host))
 
-(def h2-local
-  {:classname   "org.h2.Driver"
-   :subprotocol "h2"
-   :subname     (format "tcp://%s/~/.info-kit/db/info-kit;jmx=true" (host-name))
-   :user        "sa"
-   :password    ""})
+(defstate h2-local
+          :start {:classname   "org.h2.Driver"
+                  :subprotocol "h2"
+                  :subname     (format "tcp://%s/~/.info-kit/db/info-kit;jmx=true" (host-name))
+                  :user        "sa"
+                  :password    ""})
 
-(def h2-mem
-  {:classname   "org.h2.Driver"
-   :subprotocol "h2"
-   :subname     "mem:info-kit;DB_CLOSE_DELAY=-1"
-   :user        "sa"
-   :password    ""})
+(defstate h2-mem
+          :start
+          {:classname   "org.h2.Driver"
+           :subprotocol "h2"
+           :subname     "mem:info-kit;DB_CLOSE_DELAY=-1"
+           :user        "sa"
+           :password    ""})
 
 (defn start-h2
   "Start a local H2 TCP Server"

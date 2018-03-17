@@ -1,7 +1,7 @@
 (ns info-kit.logging
   (:require [taoensso.timbre :as log]
             [clojure.java.jdbc :as jdbc]
-            [info-kit.db :as db])
+            [info-kit.db :refer [h2-local]])
   (:import (java.sql Timestamp)
            (java.util Date)))
 
@@ -23,7 +23,7 @@
    :min-level  nil
    :rate-limit nil
    :output-fn  :inherit
-   :fn         (fn [data] (log-message db/h2-local data))})
+   :fn         (fn [data] (log-message h2-local data))})
 
 (defn config-logging []
   (log/set-level! :debug)

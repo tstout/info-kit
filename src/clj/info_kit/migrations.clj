@@ -32,8 +32,6 @@
 (defn add-region []
   (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN region VARCHAR"))
 
-;; migrations mechanics
-
 (defn run-and-record [db-conn migration]
   ;;(log/infof "Running migration: %s" (:name (meta migration)))
   (migration)
