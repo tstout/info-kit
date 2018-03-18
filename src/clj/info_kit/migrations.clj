@@ -20,17 +20,8 @@
     (load-sql "initial-schema")
     (sql/db-do-commands db-spec)))
 
-(defn add-instance-id []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN instance_id VARCHAR"))
-
-(defn add-shutdown-token []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN shutdown_token VARCHAR"))
-
-(defn add-dns []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN dns VARCHAR"))
-
-(defn add-region []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN region VARCHAR"))
+(defn add-tag-descr []
+  (sql/db-do-commands db-spec "ALTER TABLE TAGS ADD COLUMN description CLOB"))
 
 (defn run-and-record [db-conn migration]
   ;;(log/infof "Running migration: %s" (:name (meta migration)))
@@ -58,9 +49,6 @@
 
 (defn run-migration []
   ;;(log/info "running migrations")
-  (migrate #'initial-schema))
-           ;#'add-instance-id
-           ;#'add-shutdown-token
-           ;#'add-dns
-           ;#'add-region))
+  (migrate #'initial-schema
+           #'add-tag-descr))
 
