@@ -2,7 +2,8 @@
   (:use info-kit.handler
         figwheel-sidecar.repl-api
         ring.server.standalone
-        [ring.middleware file-info file]))
+        [ring.middleware file-info file])
+  (:require [mount.core :as mount]))
 
 (defonce server (atom nil))
 
@@ -26,7 +27,8 @@
                    {:port port
                     :auto-reload? true
                     :join? false}))
-    (println (str "You can view the site at http://localhost:" port))))
+    (println (str "You can view the site at http://localhost:" port))
+    (mount/start)))
 
 (defn stop-server []
   (.stop @server)
