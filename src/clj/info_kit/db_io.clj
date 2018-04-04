@@ -79,7 +79,7 @@
   (assoc row :body
              (with-open
                [rdr (BufferedReader. (.getCharacterStream (:body row)))]
-               (apply str (line-seq rdr)))))
+               (reduce (fn [a b] (str a "\n" b "\n")) (line-seq rdr)))))
 
 
 (defn read-artifact
