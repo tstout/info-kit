@@ -37,9 +37,3 @@
 (defstate h2-db
           :start (start-h2)
           :stop (.stop h2-db))
-
-(defn run-query
-  "Execute the specified sql with an assumed id query parameter."
-  [sql db-spec]
-  (jdbc/with-db-connection [conn db-spec]
-                           (jdbc/query conn [sql])))
