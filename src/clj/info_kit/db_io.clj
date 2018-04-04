@@ -81,14 +81,13 @@
                [rdr (BufferedReader. (.getCharacterStream (:body row)))]
                (reduce (fn [a b] (str a "\n" b)) (line-seq rdr)))))
 
-
 (defn read-artifact
-  ""
+  "Retrieve a single artifact by id"
   [m]
   (let [{:keys [db-spec id]} m]
     (-> (jdbc/with-db-connection
           [conn db-spec]
           (jdbc/query conn
-                      ["select * from artifacts where id = ?" id]
+                      ["select created, name, body from artifacts where id = ?" id]
                       {:row-fn clob-to-string}))
         first)))
