@@ -43,10 +43,19 @@
            '[mount.core :as mount]
            '[info-kit.db-io :as db-io]
            '[taoensso.timbre :as log]
-           '[info-kit.logging :as log-cfg]))
+           '[info-kit.logging :as log-cfg]
+           '[info-kit.artifact :as artifact]))
 
 (load-vars)
 (println (str "Java Runtime: " (-> Runtime
                                type
                                .getPackage
                                .getImplementationVersion)))
+
+(defn start-stuff
+  "temp goto fn for startup in repl"
+  []
+  ;;(migrations/run-migration)
+  (mount/start)
+  (info-kit.logging/config-logging)
+  (start-server))

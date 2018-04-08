@@ -7,7 +7,6 @@
   (:gen-class))
 
  (defn -main [& args]
-   (println "------------Main Invoked ----------------")
    (let [port (Integer/parseInt (or (env :port) "3000"))]
      (run-jetty app {:port port :join? false})
      (mount/start)))

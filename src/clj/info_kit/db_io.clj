@@ -73,13 +73,15 @@
   (let [{:keys [db-spec id]} m]
     (jdbc/with-db-transaction
       [conn db-spec]
-      (jdbc/execute! conn ["delete from artifacts where id = ?" id]))))
+      (jdbc/execute! conn ["update artifacts set active = false where id = ?" id]))))
 
 (defn clob-to-string [row]
   (assoc row :body
              (with-open
                [rdr (BufferedReader. (.getCharacterStream (:body row)))]
-               (reduce (fn [a b] (str a "\n" b)) (line-seq rdr)))))
+               (reduce
+                 (fn [a b] (str a "\n" b))
+                 (line-seq rdr)))))
 
 (defn read-artifact
   "Retrieve a single artifact by id"
