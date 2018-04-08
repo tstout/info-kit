@@ -1,6 +1,7 @@
 (ns info-kit.logging
   (:require [taoensso.timbre :as log]
             [clojure.java.jdbc :as jdbc]
+            [mount.core :refer [defstate]]
             [info-kit.db :refer [h2-local]])
   (:import (java.sql Timestamp)
            (java.util Date)))
@@ -27,9 +28,10 @@
 
 (defn config-logging []
   (log/set-level! :debug)
-  (log/merge-config! {:appenders {:h2 h2-appender}}))
+  (log/merge-config! {:appenders {:h2 h2-appender}})
+  (log/info "Logging Initialized"))
 
-
+(defstate logging :start config-logging)
 
 
 

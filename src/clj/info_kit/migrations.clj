@@ -3,34 +3,26 @@
 ;;
 (ns info-kit.migrations
   (:require [clojure.java.jdbc :as sql]
-            [info-kit.db :refer [h2-local]]
+            [info-kit.db :refer [h2-server]]
             [taoensso.timbre :as log]
             [info-kit.conf :refer [load-res]])
   (:import (java.sql Timestamp)))
 
-
-
 (defn load-sql [res]
   (load-res (str "sql/migrations/" res ".sql")))
 
-(def db-spec h2-local)
+(def db-spec h2-server)
 
 (defn initial-schema []
   (->>
     (load-sql "initial-schema")
     (sql/db-do-commands db-spec)))
 
-(defn add-instance-id []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN instance_id VARCHAR"))
+(defn add-tag-descr []
+  (sql/db-do-commands db-spec "ALTER TABLE TAGS ADD COLUMN description CLOB"))
 
-(defn add-shutdown-token []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN shutdown_token VARCHAR"))
-
-(defn add-dns []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN dns VARCHAR"))
-
-(defn add-region []
-  (sql/db-do-commands db-spec "ALTER TABLE instances ADD COLUMN region VARCHAR"))
+(defn add-artifact-active []
+  (sql/db-do-commands db-spec "ALTER TABLE ARTIFACTS add COLUMN active boolean default true"))
 
 (defn run-and-record [db-conn migration]
   ;;(log/infof "Running migration: %s" (:name (meta migration)))
@@ -57,10 +49,7 @@
         (run-and-record db-conn m)))))
 
 (defn run-migration []
-  ;;(log/info "running migrations")
-  (migrate #'initial-schema))
-           ;#'add-instance-id
-           ;#'add-shutdown-token
-           ;#'add-dns
-           ;#'add-region))
+  (migrate #'initial-schema
+           #'add-tag-descr
+           #'add-artifact-active))
 

@@ -2,7 +2,8 @@
   (:use info-kit.handler
         figwheel-sidecar.repl-api
         ring.server.standalone
-        [ring.middleware file-info file]))
+        [ring.middleware file-info file])
+  (:require [mount.core :as mount]))
 
 (defonce server (atom nil))
 
@@ -20,13 +21,15 @@
 (defn start-server
   "used for starting the server in development mode from REPL"
   [& [port]]
+  (println "Server Started-------")
   (let [port (if port (Integer/parseInt port) 3000)]
     (reset! server
             (serve (get-handler)
                    {:port port
                     :auto-reload? true
                     :join? false}))
-    (println (str "You can view the site at http://localhost:" port))))
+    (println (str "You can view the site at http://localhost:" port))
+    (mount/start)))
 
 (defn stop-server []
   (.stop @server)
@@ -40,10 +43,19 @@
            '[mount.core :as mount]
            '[info-kit.db-io :as db-io]
            '[taoensso.timbre :as log]
-           '[info-kit.logging :as log-cfg]))
+           '[info-kit.logging :as log-cfg]
+           '[info-kit.artifact :as artifact]))
 
 (load-vars)
 (println (str "Java Runtime: " (-> Runtime
                                type
                                .getPackage
                                .getImplementationVersion)))
+
+(defn start-stuff
+  "temp goto fn for startup in repl"
+  []
+  ;;(migrations/run-migration)
+  (mount/start)
+  (info-kit.logging/config-logging)
+  (start-server))
