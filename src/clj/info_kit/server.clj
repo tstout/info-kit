@@ -3,10 +3,12 @@
             [config.core :refer [env]]
             [ring.adapter.jetty :refer [run-jetty]]
             [taoensso.timbre :as log]
-            [mount.core :as mount])
+            [info-kit.sys :as sys])
   (:gen-class))
 
- (defn -main [& args]
-   (let [port (Integer/parseInt (or (env :port) "3000"))]
-     (run-jetty app {:port port :join? false})
-     (mount/start)))
+
+(defn -main [& args]
+  (let [port (Integer/parseInt (or (env :port) "3000"))]
+    (sys/start :prod)
+    (log/infof "Starting jetty on port %d" port)
+    (run-jetty app {:port port :join? false})))

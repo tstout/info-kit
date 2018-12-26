@@ -2,7 +2,7 @@
   (:require [taoensso.timbre :as log]
             [clojure.java.jdbc :as jdbc]
             [mount.core :refer [defstate]]
-            [info-kit.db :refer [h2-local]])
+            [info-kit.db :refer [db-conn]])
   (:import (java.sql Timestamp)
            (java.util Date)))
 
@@ -18,20 +18,30 @@
       [conn config]
       (jdbc/insert! conn :logs entry))))
 
-(def h2-appender
+(defn h2-appender [db]
   {:enabled?   true
    :async?     false
    :min-level  nil
    :rate-limit nil
    :output-fn  :inherit
-   :fn         (fn [data] (log-message h2-local data))})
+   :fn         (fn [data] (log-message db data))})
 
-(defn config-logging []
+(defn config-logging [db]
   (log/set-level! :debug)
-  (log/merge-config! {:appenders {:h2 h2-appender}})
+  (log/merge-config! {:appenders {:h2 (h2-appender db)}})
   (log/info "Logging Initialized"))
 
-(defstate logging :start config-logging)
+(defmulti init-logging "" identity)
+
+(defmethod init-logging :test [env]
+  (config-logging (db-conn :test)))
+
+(defmethod init-logging :dev [env]
+  (config-logging (db-conn :dev)))
+
+(defmethod init-logging :prod [env]
+  (config-logging (db-conn :prod)))
+
 
 
 

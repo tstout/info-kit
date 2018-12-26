@@ -28,8 +28,7 @@
                    {:port port
                     :auto-reload? true
                     :join? false}))
-    (println (str "You can view the site at http://localhost:" port))
-    (mount/start)))
+    (println (str "You can view the site at http://localhost:" port))))
 
 (defn stop-server []
   (.stop @server)
@@ -37,25 +36,18 @@
 
 (defn load-vars []
   (require '[info-kit.db :as db]
-           '[info-kit.migrations :as migrations]
+           '[info-kit.migrations :as migrations] 
            '[clojure.java.jdbc :as sql]
            '[info-kit.conf :as conf]
            '[mount.core :as mount]
            '[info-kit.db-io :as db-io]
            '[taoensso.timbre :as log]
            '[info-kit.logging :as log-cfg]
-           '[info-kit.artifact :as artifact]))
+           '[info-kit.artifact :as artifact]
+           '[info-kit.sys :as sys]))
 
 (load-vars)
 (println (str "Java Runtime: " (-> Runtime
                                type
                                .getPackage
                                .getImplementationVersion)))
-
-(defn start-stuff
-  "temp goto fn for startup in repl"
-  []
-  ;;(migrations/run-migration)
-  (mount/start)
-  (info-kit.logging/config-logging)
-  (start-server))
