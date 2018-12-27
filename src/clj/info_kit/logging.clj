@@ -1,7 +1,6 @@
 (ns info-kit.logging
   (:require [taoensso.timbre :as log]
             [clojure.java.jdbc :as jdbc]
-            [mount.core :refer [defstate]]
             [info-kit.db :refer [db-conn]])
   (:import (java.sql Timestamp)
            (java.util Date)))

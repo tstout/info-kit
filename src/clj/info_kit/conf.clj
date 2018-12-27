@@ -1,8 +1,8 @@
 (ns info-kit.conf
-  (:require [mount.core :as mount :refer [defstate]]
-            [clojure.edn :as edn]
-            [clojure.tools.logging :refer [info]]
-            [clojure.java.io :as io]))
+  (:require
+    [clojure.edn :as edn]
+    [clojure.tools.logging :refer [info]]
+    [clojure.java.io :as io]))
 
 
 (defn load-res [res]

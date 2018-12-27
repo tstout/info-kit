@@ -1,6 +1,5 @@
 (ns info-kit.db
   (:require [taoensso.timbre :as log]
-            [mount.core :refer [defstate]]
             [clojure.java.jdbc :as jdbc])
   (:import (java.net InetAddress)
            (org.h2.tools Server)

@@ -2,8 +2,7 @@
   (:use info-kit.handler
         figwheel-sidecar.repl-api
         ring.server.standalone
-        [ring.middleware file-info file])
-  (:require [mount.core :as mount]))
+        [ring.middleware file-info file]))
 
 (defonce server (atom nil))
 
@@ -39,7 +38,6 @@
            '[info-kit.migrations :as migrations] 
            '[clojure.java.jdbc :as sql]
            '[info-kit.conf :as conf]
-           '[mount.core :as mount]
            '[info-kit.db-io :as db-io]
            '[taoensso.timbre :as log]
            '[info-kit.logging :as log-cfg]

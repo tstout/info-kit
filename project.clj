@@ -9,7 +9,6 @@
                  [com.taoensso/timbre "4.10.0"]
                  [org.clojure/java.jdbc "0.7.5"]
                  [reagent "0.7.0"]
-                 [mount "0.1.12"]
                  [reagent-utils "0.2.1"]
                  [ring "1.6.3"]
                  [ring/ring-defaults "0.3.1"]

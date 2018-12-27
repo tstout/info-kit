@@ -1,7 +1,6 @@
 (ns info-kit.db-io
   (:require [taoensso.timbre :as log]
             [info-kit.db :refer [mk-conn]]
-            [mount.core :refer [defstate]]
             [clojure.java.jdbc :as jdbc])
   (:import (java.io BufferedReader)))
 
