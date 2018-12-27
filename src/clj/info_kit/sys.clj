@@ -11,8 +11,7 @@
 (defn start [env]
   (server :start)
   (run-migration)
-  (logging/init-logging env)
-  )
+  (logging/init-logging env))
 
 (defn stop [env]
   (server :stop))
