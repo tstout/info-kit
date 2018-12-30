@@ -35,7 +35,7 @@
            (GET "/artifact/:id" [id] (fetch-artifact id))
            (DELETE "/artifact/:id" [id] (delete-artifact id))
 
-           (resources " / ")
+           (resources "/")
            (not-found " Not Found "))
 
 (def app (wrap-middleware #'routes))

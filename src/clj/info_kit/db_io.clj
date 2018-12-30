@@ -1,12 +1,12 @@
 (ns info-kit.db-io
   (:require [taoensso.timbre :as log]
-            [mount.core :refer [defstate]]
+            [info-kit.db :refer [mk-conn]]
             [clojure.java.jdbc :as jdbc])
   (:import (java.io BufferedReader)))
 
-(defn add-tag [tag-name db-spec]
+(defn add-tag [tag-name env]
   (jdbc/with-db-connection
-    [conn db-spec]
+    [conn (mk-conn env)]
     (jdbc/insert! conn :tags {:name tag-name})))
 
 (defn artifacts-by-tag [tag-name db-spec]
@@ -43,9 +43,9 @@
    :name    string defining name of artifact>
    :tags    [vector of tag ids to associate with the artifact]}"
   [m]
-  (let [{:keys [db-spec tags]} m]
+  (let [{:keys [db-spec tags env]} m]
     (jdbc/with-db-transaction
-      [conn db-spec]
+      [conn (mk-conn env)]
       (->>
         (insert-artifact (merge m {:conn conn}))
         (assoc-tags conn tags)))))
@@ -57,9 +57,9 @@
    :body    string defining body to update
    :id      primary key of the artifact}"
   [m]
-  (let [{:keys [db-spec body id]} m]
+  (let [{:keys [body id env]} m]
     (jdbc/with-db-transaction
-      [conn db-spec]
+      [conn (mk-conn env)]
       (jdbc/execute! conn ["update artifacts set body = ? where id = ?"
                            body
                            id]))))
@@ -70,9 +70,9 @@
   {:db-spec {map of database spec}
   :id       primary key of the artifact}"
   [m]
-  (let [{:keys [db-spec id]} m]
+  (let [{:keys [env id]} m]
     (jdbc/with-db-transaction
-      [conn db-spec]
+      [conn (mk-conn env)]
       (jdbc/execute! conn ["update artifacts set active = false where id = ?" id]))))
 
 (defn clob-to-string [row]
@@ -86,9 +86,9 @@
 (defn read-artifact
   "Retrieve a single artifact by id"
   [m]
-  (let [{:keys [db-spec id]} m]
+  (let [{:keys [env id]} m]
     (-> (jdbc/with-db-connection
-          [conn db-spec]
+          [conn (mk-conn env)]
           (jdbc/query conn
                       ["select created, name, body from artifacts where id = ?" id]
                       {:row-fn clob-to-string}))
