@@ -93,3 +93,4 @@
                       ["select created, name, body from artifacts where id = ?" id]
                       {:row-fn clob-to-string}))
         first)))
+
