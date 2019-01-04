@@ -14,6 +14,9 @@
     [conn db-spec]
     (jdbc/query conn ["select id, name, count from tags where name = ?" tag-name])))
 
+
+;; TODO - consider replacing this scope_identity with a dedicated
+;; sequence.
 (defn insert-artifact
   [m]
   (let [{:keys [name body conn]} m]
@@ -93,3 +96,4 @@
                       ["select created, name, body from artifacts where id = ?" id]
                       {:row-fn clob-to-string}))
         first)))
+
