@@ -1,9 +1,9 @@
 (ns info-kit.handler
-  (:require [compojure.core :refer [GET POST DELETE defroutes]]
+  (:require [compojure.core :refer [GET POST DELETE PATCH defroutes]]
             [compojure.route :refer [not-found resources]]
             [hiccup.page :refer [include-js include-css html5]]
             [info-kit.middleware :refer [wrap-middleware]]
-            [info-kit.artifact :refer [create-artifact fetch-artifact delete-artifact]]
+            [info-kit.artifact :refer [create-artifact fetch-artifact delete-artifact update-artifact]]
             [config.core :refer [env]]))
 
 (def mount-target
@@ -34,7 +34,7 @@
            (POST "/artifact" request (create-artifact (slurp (:body request))))
            (GET "/artifact/:id" [id] (fetch-artifact id))
            (DELETE "/artifact/:id" [id] (delete-artifact id))
-
+           (PATCH "/artifact" request (update-artifact (slurp (:body request))))
            (resources "/")
            (not-found " Not Found "))
 

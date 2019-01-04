@@ -38,7 +38,15 @@
       (str "artifact/")
       created)))
 
-(defn update-artifact [])
+(defn update-artifact [request]
+  (let [req-map (from-json request)]
+    (log/infof "Received update request: '%s'" (str req-map))
+    (->>
+      req-map
+      (merge {:env *env*})
+      db-io/update-artifact
+      (str "artifact/")
+      created)))
 
 (defn fetch-artifact [id]
   (log/infof "Received read request for artifact: %s" id)
@@ -53,11 +61,16 @@
 
 (comment
 
-  (def t-artifact {:created #inst "2018-04-08T20:42:31.547000000-00:00", :name "test atrtifact6", :body "some text9"})
+  (def t-artifact {:created #inst "2018-04-08T20:42:31.547000000-00:00", :name "test atrtifact6", :body "some updated text"})
 
   (in-ns 'info-kit.artifact)
-  (info-kit.repl/start-server)                              ;; if not already running
+  (info-kit.repl/start-server) ;; if not already running
+  (info-kit.sys/start :dev)
+
   (to-json t-artifact)
 
   (fetch-artifact 18)
+
+  (update-artifact (to-json {:id 18 :body "Updated tfext2!!!!!"}))
+
   )
