@@ -41,6 +41,16 @@
                  false (str/blank? created))
         (let [create-resp (create-artifact (:create-req fixtures))
               location (artifact-location create-resp)
-              id (artifact-id location)
-              artifact (from-json (fetch-artifact id))]
-          artifact))
+              id (artifact-id location)]
+              (from-json (fetch-artifact id))))
+
+;;
+;; An artifact can be created and then updated
+;;
+(expect (more-of {:keys [body]}
+                 "Updated text!!!!!" body)
+        (let [create-resp (create-artifact (:create-req fixtures))
+              location (artifact-location create-resp)
+              id (artifact-id location)]
+              (update-artifact (to-json {:id id :body "Updated text!!!!!"}))
+              (from-json (fetch-artifact id))))

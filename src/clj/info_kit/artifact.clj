@@ -72,7 +72,6 @@
   (log/infof "Received delete request for artifact: %s" id)
   (db-io/delete-artifact {:env *env* :id id}))
 
-
 (comment
 
   (def t-artifact {:created #inst "2018-04-08T20:42:31.547000000-00:00", :name "test atrtifact6", :body "some updated text"})
