@@ -2,6 +2,7 @@
   (:require [clojure.edn :as edn]
             [info-kit.db-io :as db-io]
             [taoensso.timbre :as log]
+            [clojure.string :as str]
             [clojure.data.json :as json]
             [ring.util.response :refer [response created not-found]])
   (:import (java.text SimpleDateFormat)))
@@ -43,6 +44,13 @@
   a Location header. Use this fn to get the value"
   [resp]
   (-> resp :headers (get "Location")))
+
+(defn artifact-id [location]
+  (->
+    location
+    (str/split #"/")
+    last
+    Integer/parseInt))
 
 (defn update-artifact [request]
   (let [req-map (from-json request)]

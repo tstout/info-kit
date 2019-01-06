@@ -1,5 +1,4 @@
 (ns info-kit.artifact-test
-  ;;(:require [clojure.test :refer :all])
   (:require [expectations :refer :all])
   (:require [clojure.string :as str])
   (:require [info-kit.conf :refer [load-res]])
@@ -29,14 +28,19 @@
 ;; Creating an artifact should return a location header
 ;; identifying the new artifact.
 ;;
-(expect (more-of resp
-                 201 (:status resp)
-                 true (contains? (:headers resp) "Location"))
+(expect (more-of {:keys [status headers]}
+                 201 status
+                 true (contains? headers "Location"))
         (create-artifact (:create-req fixtures)))
 ;;
 ;; An artifact can be created and then fetched
 ;;
-(expect true
+(expect (more-of {:keys [name body created]}
+                 "artifact name" name
+                 "body text" body
+                 false (str/blank? created))
         (let [create-resp (create-artifact (:create-req fixtures))
-              location (artifact-location create-resp)]
-          (str/starts-with? location "artifact")))
+              location (artifact-location create-resp)
+              id (artifact-id location)
+              artifact (from-json (fetch-artifact id))]
+          artifact))
