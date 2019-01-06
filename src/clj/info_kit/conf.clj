@@ -1,7 +1,6 @@
 (ns info-kit.conf
   (:require
     [clojure.edn :as edn]
-    [clojure.tools.logging :refer [info]]
     [clojure.java.io :as io]))
 
 

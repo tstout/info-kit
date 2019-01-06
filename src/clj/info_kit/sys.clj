@@ -10,7 +10,7 @@
 ;;
 (defn start [env]
   (server :start)
-  (run-migration)
+  (run-migration env)
   (logging/init-logging env))
 
 (defn stop [env]

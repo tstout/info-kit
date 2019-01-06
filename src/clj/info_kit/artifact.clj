@@ -38,6 +38,12 @@
       (str "artifact/")
       created)))
 
+(defn artifact-location
+  "Creating an artifact returns the id of the new artifact as
+  a Location header. Use this fn to get the value"
+  [resp]
+  (-> resp :headers (get "Location")))
+
 (defn update-artifact [request]
   (let [req-map (from-json request)]
     (log/infof "Received update request: '%s'" (str req-map))
@@ -62,6 +68,9 @@
 (comment
 
   (def t-artifact {:created #inst "2018-04-08T20:42:31.547000000-00:00", :name "test atrtifact6", :body "some updated text"})
+
+  (def create-req (info-kit.conf/load-res "create-artifact.json"))
+  (def create-resp (create-artifact create-req))
 
   (in-ns 'info-kit.artifact)
   (info-kit.repl/start-server) ;; if not already running
