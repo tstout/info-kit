@@ -54,3 +54,9 @@
               id (artifact-id location)]
               (update-artifact (to-json {:id id :body "Updated text!!!!!"}))
               (from-json (fetch-artifact id))))
+
+;;
+;; Tags can be created
+;;
+;;(expect 1 1)
+
