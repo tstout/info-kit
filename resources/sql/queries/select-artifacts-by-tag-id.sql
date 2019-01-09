@@ -1,0 +1,9 @@
+SELECT
+  a.id
+  ,a.name
+FROM
+  ARTIFACTS a
+  INNER JOIN ARTIFACT_TAGS t
+  ON a.ID = t.ARTIFACT_ID
+  AND t.TAG_ID = ?
+  AND a.ACTIVE = TRUE

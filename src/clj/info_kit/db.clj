@@ -34,16 +34,16 @@
                  :stop  (fn [] (.stop server))}]
     (fn [operation & args] (-> (server-ops operation) (apply args)))))
 
-;; TODO - use destructuring
 (defn mk-h2-pool
   "Creates a simple H2 connection pool (supplied by H2)
    Nothing fancy, but probably more than adequate for this app."
   [db-spec]
   {:datasource
-   (JdbcConnectionPool/create
-     (format "jdbc:h2:%s" (:subname db-spec))
-     (:user db-spec)
-     (:password db-spec))})
+   (let [{:keys [subname user password]} db-spec]
+     (JdbcConnectionPool/create
+       (format "jdbc:h2:%s" subname)
+       user
+       password))})
 
 (defmulti db-conn "Create an env-specific DB connection" identity)
 
