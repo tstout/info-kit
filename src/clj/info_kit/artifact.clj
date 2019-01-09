@@ -103,8 +103,6 @@
 
   (-> new-artifact-id fetch-artifact from-json)
 
-  (def new-tag (create-tag "work-related"))
-
   (assoc-tags new-artifact-id [new-tag])
 
 

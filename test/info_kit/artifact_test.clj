@@ -24,6 +24,11 @@
 (def fixtures
   {:create-req (load-res "create-artifact.json")})
 
+(defn new-artifact-id []
+  (-> (create-artifact (:create-req fixtures))
+      artifact-location
+      artifact-id))
+
 ;;
 ;; Creating an artifact should return a location header
 ;; identifying the new artifact.
@@ -39,24 +44,31 @@
                  "artifact name" name
                  "body text" body
                  false (str/blank? created))
-        (let [create-resp (create-artifact (:create-req fixtures))
-              location (artifact-location create-resp)
-              id (artifact-id location)]
-              (from-json (fetch-artifact id))))
+        (let [id (new-artifact-id)]
+          (from-json (fetch-artifact id))))
 
 ;;
 ;; An artifact can be created and then updated
 ;;
 (expect (more-of {:keys [body]}
                  "Updated text!!!!!" body)
-        (let [create-resp (create-artifact (:create-req fixtures))
-              location (artifact-location create-resp)
-              id (artifact-id location)]
-              (update-artifact (to-json {:id id :body "Updated text!!!!!"}))
-              (from-json (fetch-artifact id))))
+        (let [id (new-artifact-id)]
+          (update-artifact (to-json {:id id :body "Updated text!!!!!"}))
+          (-> id fetch-artifact from-json)))
 
 ;;
-;; Tags can be created
+;; Tags can be created and associated with an artifact
 ;;
-;;(expect 1 1)
+(expect (more-of {:keys [id name]}
+                 true (number? id)
+                 false (str/blank? name))
+        ;;false (str/blank? name))
+        (let [id (new-artifact-id)
+              tag (create-tag "work-related")]
+          (assoc-tags id [tag])
+          (->
+            tag
+            artifacts-by-tag
+            from-json
+            first)))
 
