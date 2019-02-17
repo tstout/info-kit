@@ -1,8 +1,6 @@
 (ns info-kit.state
   (:require [reagent.core :as reagent :refer [atom]]
-            [cljs.core.async :refer [<! put! pub sub chan <! >! timeout close!]]
-            [order-recon.pubsub :refer [sub-evt]]
-            [order-recon.animation :refer [busy-animation lookup-frames tax-replay-frames xml-view-frames]])
+            [cljs.core.async :refer [<! put! pub sub chan <! >! timeout close!]])
   (:require-macros [cljs.core.async.macros :refer [go-loop]]))
 
 
