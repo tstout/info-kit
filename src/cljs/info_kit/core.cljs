@@ -1,7 +1,8 @@
 (ns info-kit.core
   (:require [reagent.core :as reagent :refer [atom]]
             [secretary.core :as secretary :include-macros true]
-            [accountant.core :as accountant]))
+            [accountant.core :as accountant]
+            [info-kit.state :refer [evt-handler]]))
 
 ;; -------------------------
 ;; Views
@@ -73,4 +74,5 @@
      (fn [path]
        (secretary/locate-route path))})
   (accountant/dispatch-current!)
-  (mount-root))
+  (mount-root)
+  (evt-handler))

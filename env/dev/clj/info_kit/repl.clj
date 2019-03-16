@@ -42,7 +42,8 @@
            '[taoensso.timbre :as log]
            '[info-kit.logging :as log-cfg]
            '[info-kit.artifact :as artifact]
-           '[info-kit.sys :as sys]))
+           '[info-kit.sys :as sys]
+           '[clojure.pprint :refer [pprint]]))
 
 (load-vars)
 (println (str "Java Runtime: " (-> Runtime
