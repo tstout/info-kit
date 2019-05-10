@@ -34,7 +34,7 @@
 (defonce page (atom #'tags-page))
 
 (defn current-page []
-  [:div
+  [:div [:header [:h1 "info-kit"]]
    [:div {:class :sidenav}
     [:a {:href "/"} "Tags"]
     [:a {:href "/reminders"} "Reminders"]
@@ -42,7 +42,8 @@
     [:a {:href "/reporting"} "Reporting"]
     [:a {:href "/about"} "About"]]
    [:div {:class :main}
-    [@page]]])
+    [@page]]
+   [:footer "Info Kit"]])
 
 (secretary/defroute "/" []
                     (reset! page #'tags-page))

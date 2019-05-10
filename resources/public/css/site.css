@@ -1,12 +1,28 @@
 .body-container {
   font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
-  max-width: 600px;
+  max-width: 1000px;
   margin: 0 auto;
-  padding-top: 72px;
+  /*padding-top: 72px;*/
   -webkit-font-smoothing: antialiased;
   font-size: 1.125em;
   color: #333;
   line-height: 1.5em;
+}
+
+html {
+  margin: 0px;
+  height: 100%;
+  width: 100%;
+}
+
+header {
+  font-size: 10px;
+  height: 40px;
+  background-color: #3980ff;
+  color: white;
+  text-align: center;
+  padding: 1px;
+  font-family: 'DejaVu Sans Mono', monospace
 }
 
 h1, h2, h3 {
@@ -34,7 +50,7 @@ a:hover {
 }
 
 .sidenav {
-  width: 140px;
+  width: 100px;
   position: fixed;
   z-index: 1;
   top: 20px;
@@ -57,9 +73,11 @@ a:hover {
 }
 
 .main {
-  margin-left: 140px; /* Same width as the sidebar + left position in px */
-  font-size: 14px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
+  /*margin-left: 140px; !* Same width as the sidebar + left position in px *!*/
+  font-size: 11px; /* Increased text to enable scrolling */
+  width: 100%;
+  /*padding: 0px 10px;*/
+  height: 100%;
 }
 
 @media screen and (max-height: 450px) {

@@ -87,7 +87,7 @@
   {:http-server-root "public"
    :server-port      3449
    :nrepl-port       7002
-   :nrepl-middleware ["cemerick.piggieback/wrap-cljs-repl"
+   :nrepl-middleware ["cider.piggieback/wrap-cljs-repl"
                       ]
    :css-dirs         ["resources/public/css"]
    :ring-handler     info-kit.handler/app}
@@ -95,7 +95,7 @@
 
 
   :profiles {:dev     {:repl-options   {:init-ns          info-kit.repl
-                                        :nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+                                        :nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
 
                        :dependencies   [[binaryage/devtools "0.9.8"]
                                         [ring/ring-mock "0.3.2"]
@@ -104,7 +104,7 @@
                                         [expectations "2.1.10"]
                                         [figwheel-sidecar "0.5.14"]
                                         [org.clojure/tools.nrepl "0.2.13"]
-                                        [com.cemerick/piggieback "0.2.2"]
+                                        [cider/piggieback "0.4.0"]
                                         [pjstadig/humane-test-output "0.8.3"]
 
                                         ]
