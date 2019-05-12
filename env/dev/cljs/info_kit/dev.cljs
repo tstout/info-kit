@@ -8,3 +8,7 @@
 (enable-console-print!)
 
 (core/init!)
+
+
+;; REPL Conveniences
+(js/console.log "----------------------REPL INIT--------")

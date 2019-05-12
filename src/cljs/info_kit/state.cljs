@@ -67,7 +67,7 @@
     (go-loop
       []
       (let [evt (<! sub-ch)]
-        (prn (str "RX SM event: " (evt-name evt)))
+        (println (str "RX SM event: " (evt-name evt)))
         (->>
           (invoke-action context state-matrix evt)
           (set-state context))
