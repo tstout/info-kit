@@ -15,7 +15,7 @@
                  [compojure "1.6.0"]
                  [hiccup "1.0.5"]
                  [yogthos/config "1.1"]
-                 [com.h2database/h2 "1.4.196"]
+                 [com.h2database/h2 "1.4.197"]
                  [org.clojure/clojurescript "1.9.946"
                   :scope "provided"]
                  [secretary "1.2.3"]
